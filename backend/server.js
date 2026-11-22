@@ -59,10 +59,14 @@ app.get("/tasks", async (req, res) => {
     const tasks = await Task.find().sort({ createdAt: -1 });
     res.json(tasks);
   } catch (err) {
-    res.status(500).json({ message: "Could not fetch tasks" });
+    console.error("GET TASK ERROR:", err);
+
+    res.status(500).json({
+      message: "Could not fetch tasks",
+      error: err.message
+    });
   }
 });
-
 // Add a task
 app.post("/tasks", async (req, res) => {
   try {
